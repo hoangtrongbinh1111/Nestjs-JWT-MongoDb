@@ -1,0 +1,5 @@
+export * from './tbl_users.dto'
+export * from './tbl_roles.dto'
+export * from './tbl_objects.dto'
+export * from './tbl_permissions.dto'
+export * from './tbl_roles_permissions.dto'

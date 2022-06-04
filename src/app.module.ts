@@ -1,14 +1,12 @@
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ConfigService, ConfigModule } from '@nestjs/config';
 import { UsersModule } from './modules/users/users.module';
 import { AppController } from './app.controller';
 import { AuthModule } from './modules/auth/auth.module';
-import { APP_GUARD } from '@nestjs/core';
 import { StudentModule } from './modules/student/student.module';
-import { RolesGuard } from './modules/auth/role/roles.guard';
-import { JwtAuthGuard } from './modules/auth/jwt.guard';
-
+import { CaslModule } from './casl/casl.module';
+import { DatabaseModule } from './modules/database/database.module';
 @Module({
   imports: [
     ConfigModule.forRoot(),
@@ -32,6 +30,8 @@ import { JwtAuthGuard } from './modules/auth/jwt.guard';
     UsersModule,
     AuthModule,
     StudentModule,
+    CaslModule,
+    DatabaseModule
   ],
   controllers: [AppController],
   providers: [

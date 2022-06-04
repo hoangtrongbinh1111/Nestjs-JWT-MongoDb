@@ -1,6 +1,7 @@
 import { Injectable, BadRequestException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Type } from 'class-transformer';
+import { CaslAbilityFactory } from 'src/casl/casl-ability.factory';
 import { Model, Types } from 'mongoose';
 import { StudentDocument, ICreateStudentDto } from 'src/@types';
 import { Student } from './student.schema';
@@ -10,6 +11,7 @@ export class StudentService {
     constructor(
         @InjectModel(Student.name)
         private readonly studentSchema: Model<StudentDocument>,
+        private caslAbilityFactory: CaslAbilityFactory,
     ) { }
 
     async getAllStudents(req) {

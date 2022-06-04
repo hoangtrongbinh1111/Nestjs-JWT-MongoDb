@@ -1,0 +1,5 @@
+export * from './tbl_user.schema'
+export * from './tbl_roles.schema'
+export * from './tbl_permissions.schema'
+export * from './tbl_role_permissions.schema'
+export * from './tbl_objects.schema'
