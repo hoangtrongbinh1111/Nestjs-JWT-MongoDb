@@ -1,15 +1,15 @@
 import { IsEmail, IsIn, IsNotEmpty } from 'class-validator';
 import { Types } from 'mongoose';
 export class tbl_user_dto {
-    readonly username: string;
-    readonly password: string;
-    readonly email: string;
+    username: string;
+    password: string;
+    email: string;
 
-    readonly sex: number;
-    readonly address: string;
-    readonly fullname: string;
-    readonly avatar: string;
-    readonly roleId: Types.ObjectId;
+    sex: number;
+    address: string;
+    fullname: string;
+    avatar: string;
+    roleId: Types.ObjectId;
 }
 
 export class CreateUserDto {

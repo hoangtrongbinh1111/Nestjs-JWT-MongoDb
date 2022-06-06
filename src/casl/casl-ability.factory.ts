@@ -11,41 +11,30 @@ import { Role } from 'src/common/enums/roles.enum';
 import { Status } from 'src/common/enums/status.enum';
 import { Student } from 'src/modules/student/student.schema';
 import { tbl_user } from 'src/modules/database/schema';
+import { tbl_user_dto } from 'src/modules/database/dto';
+import { tbl_permissions_dto } from 'src/modules/database/dto';
+import { permission_resource_dto } from 'src/modules/database/dto';
 import { Logger } from '@nestjs/common';
-import { TblUsersService} from '../modules/database/services/tbl_users.service'
-
-type Subjects = InferSubjects<typeof Student | typeof tbl_user> | 'all';
-export type AppAbility = Ability<[Action, Subjects]>;
-
+import { TblUsersService } from '../modules/database/services/tbl_users.service';
+import { PermissionsConstant } from '../config';
+// type Subjects = InferSubjects<typeof Student | typeof tbl_user> | 'all';
+export type PermissionObjectType = any;
+export type AppAbility = Ability<[PermissionsConstant, PermissionObjectType]>;
+interface CaslPermission {
+    action: PermissionsConstant;
+    // In our database, Invoice, Project... are called "object"
+    // but in CASL they are called "subject"
+    subject: string;
+}
 @Injectable()
 export class CaslAbilityFactory {
-    constructor(private readonly usersService: TblUsersService) { }
-    async createForUser(user: tbl_user | any) {
-        const { can, cannot, build } = new AbilityBuilder<
-            Ability<[Action, Subjects]>
-        >(Ability as AbilityClass<AppAbility>);
-        const userData = await this.usersService.getOneById(user._id);
-        Logger.log(userData);
-        // if (userData?.roles.includes(Role.Admin)) {
-        //     Logger.log("admin");
-        //     can(Action.Manage, 'all'); // có quyền admin
-        // }
-        // if (userData?.roles.includes(Role.User)) {
-        //     Logger.log("user");
-        //     can(Action.Read, Student);
-        //     can(Action.Read, User, { email: userData.email }); // xem được thông tin của bản thân
-        //     cannot(Action.Delete, Student);
-        //     cannot(Action.Update, Student);
-        //     cannot(Action.Create, Student);
-        // }
-        // if (!userData) {
-        //     cannot(Action.Delete, Student);
-        //     cannot(Action.Update, Student);
-        //     cannot(Action.Create, Student);
-        // }
-        return build({
-            detectSubjectType: (item) =>
-                item.constructor as ExtractSubjectType<Subjects>,
-        });
+    constructor(private userService: TblUsersService) { }
+    async createForUser(user: tbl_user_dto): Promise<AppAbility> {
+        const dbPermissions: permission_resource_dto[] = await this.userService.findAllPermissionsOfUser(user);
+        const caslPermissions: CaslPermission[] = dbPermissions.map(p => ({
+            action: PermissionsConstant.VIEW,
+            subject: p.resource,
+        }));
+        return new Ability<[PermissionsConstant, PermissionObjectType]>(caslPermissions);
     }
 }

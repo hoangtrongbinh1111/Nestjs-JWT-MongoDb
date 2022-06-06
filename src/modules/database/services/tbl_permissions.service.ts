@@ -5,7 +5,7 @@ import { tbl_permissions_dto } from '../dto';
 import { tbl_permissions } from '../schema/tbl_permissions.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types, FilterQuery } from 'mongoose';
-
+const ObjectId = Types.ObjectId;
 @Injectable()
 export class TblPermissionsService implements IModelDbService<tbl_permissions, tbl_permissions_dto>{
 
@@ -28,11 +28,11 @@ export class TblPermissionsService implements IModelDbService<tbl_permissions, t
       }
 
     async update(id: Types.ObjectId, entity: tbl_permissions_dto) {
+        entity.objectId = new ObjectId(entity.objectId); 
         return this.permissionsModel
             .updateMany({
                 _id: id
-            },
-                entity)
+            }, entity)
             .exec();
     }
 

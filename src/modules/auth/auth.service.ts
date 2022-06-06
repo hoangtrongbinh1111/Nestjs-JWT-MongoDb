@@ -1,6 +1,7 @@
 import {
   BadRequestException,
   Injectable,
+  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 import { TblUsersService } from '../database/services/tbl_users.service';
@@ -13,7 +14,7 @@ import { SALT_ROUNDS } from 'src/config';
 export class AuthService {
   constructor(
     private usersService: TblUsersService,
-    private jwtService: JwtService,
+    private jwtService: JwtService
   ) {}
 
   async login(payload: SignInUserDto) {

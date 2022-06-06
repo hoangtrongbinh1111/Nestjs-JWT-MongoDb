@@ -3,8 +3,8 @@ import { Action } from 'src/common/enums/action.enum';
 import { IPolicyHandler } from 'src/common/interfaces/ipolicy-handler.interface';
 import { Student } from 'src/modules/student/student.schema'; 
 
-export class CreateStudentPolicyHandler implements IPolicyHandler {
-  handle(ability: AppAbility) {
-    return ability.can(Action.Create, Student);
-  }
-}
+// export class CreateStudentPolicyHandler implements IPolicyHandler {
+//   handle(ability: AppAbility) {
+//     return ability.can(Action.Create, Student);
+//   }
+// }

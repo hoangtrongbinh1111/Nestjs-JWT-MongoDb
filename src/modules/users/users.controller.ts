@@ -9,7 +9,7 @@ import { TblRolesPermissionsService } from '../database/services/tbl_roles_permi
 import { tbl_roles_dto, tbl_user_dto, tbl_objects_dto, tbl_permissions_dto, tbl_roles_permissions_dto } from '../database/dto';
 import { CheckPolicies } from 'src/common/decorators/check-policies.decorator';
 import { PoliciesGuard } from 'src/common/guards/policies.guard';
-import { ReadStudentPolicyHandler } from 'src/common/policies/read.policy';
+// import { ReadStudentPolicyHandler } from 'src/common/policies/read.policy';
 import { Types } from 'mongoose';
 
 @UseGuards(JwtAuthGuard, PoliciesGuard)

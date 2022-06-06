@@ -58,7 +58,7 @@ export class StudentService {
 
     async updateStudent(studentId: string, payload: ICreateStudentDto) {
         try {
-            const student = await this.studentSchema.findByIdAndUpdate({ _id: Types.ObjectId(studentId) }, payload, { new: true });
+            const student = await this.studentSchema.findByIdAndUpdate({ _id: studentId }, payload, { new: true });
             if (!student) {
                 throw new NotFoundException();
             }
@@ -71,7 +71,7 @@ export class StudentService {
 
     async deleteStudent(studentId: string) {
         try {
-            const student = await this.studentSchema.findByIdAndDelete({ _id: Types.ObjectId(studentId) });
+            const student = await this.studentSchema.findByIdAndDelete({ _id: studentId });
             if (!student) {
                 throw new NotFoundException();
             }
@@ -84,7 +84,7 @@ export class StudentService {
 
     private findStudent(id: string) {
         try {
-            const student = this.studentSchema.findOne({ _id: Types.ObjectId(id) });
+            const student = this.studentSchema.findOne({ _id: id });
             if (!student) {
                 throw new NotFoundException('Could not find student.');
             }
